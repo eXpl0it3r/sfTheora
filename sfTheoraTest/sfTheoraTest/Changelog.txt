@@ -1,0 +1,17 @@
+************************************************************
+** sfTheoraTest Changelog                                 **
+************************************************************
+
+1.1.0:
+  Fixed compatibility with latest SFML version (mainly naming conventions).
+  Dropped SFML 1.6 support.
+  Added seeking with Left and Right keys.
+
+1.0.2:
+  Changed sfApp.IsOpened() for SFML2 to sfApp.IsOpen().
+  Changed sfApp.GetFrameTime / 1000.0f for SFML2 to clock.Restart().
+
+1.0.1:
+  Changed EnableVerticalSync(true) and UseVerticalSync(true) to
+  SetFramerateLimit(60).
+  
