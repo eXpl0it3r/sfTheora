@@ -1,12 +1,7 @@
-////////////////////////////////
-// sfTheora 1.4.0             //
-// Copyright © Kerli Low 2011 //
-////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////
 // License:                                                                 //
-// sfTheora                                                                 //
-// Copyright (c) 2011 Kerli Low                                             //
+// sfTheora 1.5.0                                                           //
+// Copyright (c) 2020 Kerli Low                                             //
 // kerlilow@gmail.com                                                       //
 //                                                                          //
 // This software is provided 'as-is', without any express or implied        //
@@ -32,6 +27,6 @@
 #ifndef SFTHEORA_H
 #define SFTHEORA_H
 
-#include "sfTheora/Video.h"
+#include <sfTheora/Video.h>
 
 #endif // SFTHEORA_H

@@ -1,12 +1,7 @@
-////////////////////////////////
-// sfTheora 1.4.0             //
-// Copyright © Kerli Low 2011 //
-////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////
 // License:                                                                 //
-// sfTheora                                                                 //
-// Copyright (c) 2011 Kerli Low                                             //
+// sfTheora 1.5.0                                                           //
+// Copyright (c) 2020 Kerli Low                                             //
 // kerlilow@gmail.com                                                       //
 //                                                                          //
 // This software is provided 'as-is', without any express or implied        //
@@ -36,19 +31,17 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
-#include "theoraplayer/TheoraAudioInterface.h"
-#include "theoraplayer/TheoraVideoClip.h"
-#include "theoraplayer/TheoraTimer.h"
+#include <theoraplayer/TheoraAudioInterface.h>
+#include <theoraplayer/TheoraVideoClip.h>
+#include <theoraplayer/TheoraTimer.h>
 
 #define SFTHEORA_AI_MAXSAMPLES 2048
 
-
-
 namespace sftheora
 {
-  class AudioInterface;
-  class AudioInterfaceFactory;
-  class Video;
+    class AudioInterface;
+    class AudioInterfaceFactory;
+    class Video;
 }
 
 
@@ -59,34 +52,31 @@ class sftheora::AudioInterface
   : public TheoraAudioInterface, private TheoraTimer, public sf::SoundStream
 {
 public:
-  AudioInterface(TheoraVideoClip* owner, int nChannels, int freq);
+    AudioInterface(TheoraVideoClip* owner, int nChannels, int freq);
 
-  ~AudioInterface();
+    ~AudioInterface();
 
-  void insertData(float* data, int nSamples);
-  void destroy   ();
-  void play      ();
-  void pause     ();
-  void stop      ();
-  void seek      (float time);
-
+    void insertData(float* data, int nSamples);
+    void destroy   ();
+    void play      ();
+    void pause     ();
+    void stop      ();
+    void seek      (float time);
 
 private:
-  friend class sftheora::Video;
-
-
-  virtual bool onGetData(sf::SoundStream::Chunk& data);
-  virtual void onSeek   (sf::Time timeOffset);
-
-
-  sf::Mutex dataMutex_;
-
-  int nChannels_;
-  int freq_;
-
-  unsigned int read_;
-
-  std::vector<sf::Int16> data_;
+    friend class sftheora::Video;
+    
+    virtual bool onGetData(sf::SoundStream::Chunk& data);
+    virtual void onSeek   (sf::Time timeOffset);
+    
+    sf::Mutex dataMutex_;
+    
+    int nChannels_;
+    int freq_;
+    
+    std::size_t read_;
+    
+    std::vector<sf::Int16> data_;
 };
 
 
@@ -96,21 +86,17 @@ private:
 class sftheora::AudioInterfaceFactory : public TheoraAudioInterfaceFactory
 {
 public:
-  AudioInterfaceFactory();
+    AudioInterfaceFactory();
 
-  ~AudioInterfaceFactory();
+    ~AudioInterfaceFactory();
 
-	sftheora::AudioInterface* createInstance(TheoraVideoClip* owner,
+    sftheora::AudioInterface* createInstance(TheoraVideoClip* owner,
                                            int nChannels, int freq);
 
-
 private:
-  friend class sftheora::Video;
+    friend class sftheora::Video;
 
-
-  sftheora::AudioInterface* audioInterface_;
+    sftheora::AudioInterface* audioInterface_;
 };
-
-
 
 #endif // SFTHEORA_AUDIOINTERFACE_H

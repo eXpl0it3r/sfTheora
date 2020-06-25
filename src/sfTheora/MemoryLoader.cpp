@@ -1,12 +1,7 @@
-////////////////////////////////
-// sfTheora 1.4.0             //
-// Copyright © Kerli Low 2011 //
-////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////
 // License:                                                                 //
-// sfTheora                                                                 //
-// Copyright (c) 2011 Kerli Low                                             //
+// sfTheora 1.5.0                                                           //
+// Copyright (c) 2020 Kerli Low                                             //
 // kerlilow@gmail.com                                                       //
 //                                                                          //
 // This software is provided 'as-is', without any express or implied        //
@@ -31,8 +26,7 @@
 
 #include <cstring>
 
-#include "sfTheora/MemoryLoader.h"
-
+#include <sfTheora/MemoryLoader.h>
 
 
 ///////////////////////////////////////////////////////////
@@ -40,86 +34,82 @@
 ///////////////////////////////////////////////////////////
 sftheora::MemoryLoader::MemoryLoader()
 {
-  data_ = NULL;
-
-  size_ = offset_ = 0;
+    data_ = NULL;
+    
+    size_ = offset_ = 0;
 }
 
 sftheora::MemoryLoader::MemoryLoader
   (const std::string& repr, const void* data, unsigned long size)
 {
-  repr_ = repr;
-  size_ = size;
-  
-  data_ = new char[size];
-  memset(data_, 0, size);
-  memcpy(data_, data, size);
-
-  offset_ = 0;
+    repr_ = repr;
+    size_ = size;
+    
+    data_ = new char[size];
+    memset(data_, 0, size);
+    memcpy(data_, data, size);
+    
+    offset_ = 0;
 }
-
 
 sftheora::MemoryLoader::~MemoryLoader()
 {
-  release();
+    release();
 }
-
 
 void sftheora::MemoryLoader::release()
 {
-  if (data_ != NULL) {
-    delete[] reinterpret_cast<char*>(data_);
-    data_ = NULL;
-  }
-
-  size_ = offset_ = 0;
+    if (data_ != NULL) {
+        delete[] reinterpret_cast<char*>(data_);
+        data_ = NULL;
+    }
+    
+    size_ = offset_ = 0;
 }
-
 
 void sftheora::MemoryLoader::set
   (const std::string& repr, const void* data, unsigned long size)
 {
-  release();
-
-  repr_ = repr;
-  size_ = size;
-  
-  data_ = new char[size];
-  memset(data_, 0, size);
-  memcpy(data_, data, size);
-
-  offset_ = 0;
+    release();
+    
+    repr_ = repr;
+    size_ = size;
+    
+    data_ = new char[size];
+    memset(data_, 0, size);
+    memcpy(data_, data, size);
+    
+    offset_ = 0;
 }
-
 
 int sftheora::MemoryLoader::read(void* output, int nBytes)
 {
-  int rem = static_cast<int>(size_ - offset_);
-  int size = nBytes < rem ? nBytes : rem;
-
-  memcpy(output, static_cast<char*>(data_) + offset_, size);
-
-  offset_ += size;
-
-  return size;
+    int rem = static_cast<int>(size_ - offset_);
+    int size = nBytes < rem ? nBytes : rem;
+    
+    memcpy(output, static_cast<char*>(data_) + offset_, size);
+    
+    offset_ += size;
+    
+    return size;
 }
 
 std::string sftheora::MemoryLoader::repr()
 {
-  return repr_;
+    return repr_;
 }
 
-void sftheora::MemoryLoader::seek(unsigned long byte_index)
+void sftheora::MemoryLoader::seek(uint64_t byte_index)
 {
-  offset_ = byte_index;
+    offset_ = byte_index;
 }
 
-unsigned long sftheora::MemoryLoader::size()
+uint64_t sftheora::MemoryLoader::size()
 {
-  return size_;
+    return size_;
 }
 
-unsigned long sftheora::MemoryLoader::tell()
+uint64_t sftheora::MemoryLoader::tell()
 {
-  return offset_;
+    return offset_;
 }

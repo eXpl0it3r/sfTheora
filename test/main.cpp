@@ -1,12 +1,7 @@
-////////////////////////////////
-// sfTheoraTest 1.0.3         //
-// Copyright © Kerli Low 2011 //
-////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////
 // License:                                                                 //
-// sfTheoraTest                                                             //
-// Copyright (c) 2012 Kerli Low                                             //
+// sfTheoraTest 1.1.0                                                       //
+// Copyright (c) 2020 Kerli Low                                             //
 // kerlilow@gmail.com                                                       //
 //                                                                          //
 // This software is provided 'as-is', without any express or implied        //
@@ -34,75 +29,70 @@
 
 #include "sfTheora.h"
 
-
-
 int main()
 {
-  sf::RenderWindow sfApp(sf::VideoMode(800, 600, 32), "SFML Window");
-
-  sf::Clock clock;
-
-  sfApp.setFramerateLimit(60);
-
-  sftheora::Video testVid("bunny.ogg");
-  if (testVid.hasError()) {
-    std::cout<<testVid.getError()<<"\n";
-    return 1;
-  }
-
-  while (sfApp.isOpen()) {
-    sf::Event sfEvent;
-    while (sfApp.pollEvent(sfEvent)) {
-      if (sfEvent.type == sf::Event::Closed)
-        sfApp.close();
-
-      if ((sfEvent.type == sf::Event::KeyPressed)) {
-        switch (sfEvent.key.code) {
-		      case sf::Keyboard::Escape:
-            {
+    sf::RenderWindow sfApp(sf::VideoMode(800, 600, 32), "SFML Window");
+    
+    sf::Clock clock;
+    
+    sfApp.setFramerateLimit(60);
+    
+    sftheora::Video testVid("bunny.ogg");
+    if (testVid.hasError()) {
+        std::cout << testVid.getError() << '\n';
+        return 1;
+    }
+    
+    while (sfApp.isOpen()) {
+        for (sf::Event sfEvent = sf::Event(); sfApp.pollEvent(sfEvent);) {
+            if (sfEvent.type == sf::Event::Closed)
               sfApp.close();
-              break;
-            }
-
-          case sf::Keyboard::F12:
-            {
-              sf::Image screen = sfApp.capture();
-              screen.saveToFile("screenshot.png");
-
-              break;
-            }
-
-          case sf::Keyboard::Space:
-            {
-              testVid.togglePause();
-              break;
-            }
-
-          case sf::Keyboard::Left:
-            {
-              float time = testVid.getTime().asSeconds();
-              testVid.seek(sf::seconds(time - 4.0f));
-              break;
-            }
-
-          case sf::Keyboard::Right:
-            {
-              float time = testVid.getTime().asSeconds();
-              testVid.seek(sf::seconds(time + 4.0f));
-              break;
+            
+            if ((sfEvent.type == sf::Event::KeyPressed)) {
+                switch (sfEvent.key.code) {
+	    	        case sf::Keyboard::Escape:
+                    {
+                        sfApp.close();
+                        break;
+                    }
+                    
+                    case sf::Keyboard::F12:
+                    {
+                        sf::Image screen = sfApp.capture();
+                        screen.saveToFile("screenshot.png");
+                    
+                        break;
+                    }
+                    
+                    case sf::Keyboard::Space:
+                    {
+                        testVid.togglePause();
+                        break;
+                    }
+                    
+                    case sf::Keyboard::Left:
+                    {
+                        float time = testVid.getTime().asSeconds();
+                        testVid.seek(sf::seconds(time - 4.0f));
+                        break;
+                    }
+                    
+                    case sf::Keyboard::Right:
+                    {
+                        float time = testVid.getTime().asSeconds();
+                        testVid.seek(sf::seconds(time + 4.0f));
+                        break;
+                    }
+                }
             }
         }
-      }
+        
+        testVid.update(clock.restart());
+        
+        sfApp.clear();
+        sfApp.draw(testVid);
+        sfApp.display();
     }
-
-    testVid.update(clock.restart());
-
-    sfApp.clear();
-
-    sfApp.draw(testVid);
-
-    sfApp.display();
-  }
-
-  return EXIT_SUCCESS;
+    
+    return EXIT_SUCCESS;
 }

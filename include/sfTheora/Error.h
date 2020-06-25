@@ -1,12 +1,7 @@
-////////////////////////////////
-// sfTheora 1.4.0             //
-// Copyright © Kerli Low 2011 //
-////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////
 // License:                                                                 //
-// sfTheora                                                                 //
-// Copyright (c) 2011 Kerli Low                                             //
+// sfTheora 1.5.0                                                           //
+// Copyright (c) 2020 Kerli Low                                             //
 // kerlilow@gmail.com                                                       //
 //                                                                          //
 // This software is provided 'as-is', without any express or implied        //
@@ -34,11 +29,9 @@
 
 #include <string>
 
-
-
 namespace sftheora
 {
-  class Error;
+    class Error;
 }
 
 
@@ -48,19 +41,17 @@ namespace sftheora
 class sftheora::Error
 {
 public:
-  Error() { error_ = ""; }
-
-  const std::string& getError  () const;
-  bool               hasError  () const;
-  void               clearError();
-
+    Error() { error_ = ""; }
+    
+    const std::string& getError  () const;
+    bool               hasError  () const;
+    void               clearError();
 
 protected:
-  void setError(const std::string& error);
-
+    void setError(const std::string& error);
 
 private:
-  std::string error_;
+    std::string error_;
 };
 
 
@@ -69,25 +60,22 @@ private:
 ///////////////////////////////////////////////////////////
 inline const std::string& sftheora::Error::getError() const
 {
-  return error_;
+    return error_;
 }
 
 inline bool sftheora::Error::hasError() const
 {
-  return !error_.empty();
+    return !error_.empty();
 }
 
 inline void sftheora::Error::clearError()
 {
-  error_.clear();
+    error_.clear();
 }
-
 
 inline void sftheora::Error::setError(const std::string& error)
 {
-  error_ = error;
+    error_ = error;
 }
-
-
 
 #endif // SFTHEORA_ERROR_H
